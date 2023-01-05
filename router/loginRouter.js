@@ -1,21 +1,48 @@
-// const { Router } = require("express");
 const loginRouter = require("express").Router();
 const path = require("path");
 const bodyParser = require("body-parser");
+const { MongoClient } = require("mongodb");
+const url = "mongodb://localhost:27017";
+const dataBase = "Login";
+const client = new MongoClient(url);
+let popups = require("alert");
+
+// async function getData(email) {
+//   let result = await client.connect(); // returns a promise object since it takes a bit of time.Connects to the url.
+//   let db = result.db(dataBase); // connection with the specified mongoDB database
+//   let collection = db.collection("Users");
+//   let response = await collection.find({ emailId: email }).toArray();
+//   console.log(response);
+
+// return response;
+// }
 
 loginRouter.use(bodyParser.urlencoded({ extended: true }));
 
 loginRouter.get("/", (req, res) => {
   res.sendFile(
-    "C:/Users/DELL/OneDrive/Desktop/webServer/createLoginAPI/public/login.html"
+    "C:/Users/DELL/OneDrive/Desktop/webServer/createLoginAPI/public/login.html" // Hosting up the website on the server.
   );
 });
 
 loginRouter.post("/", (req, res) => {
   const email = req.body.email;
   const pwd = req.body.pwd;
+
+  async function getData(email) {
+    let result = await client.connect(); // returns a promise object since it takes a bit of time.Connects to the url.
+    let db = result.db(dataBase); // connection with the specified mongoDB database
+    let collection = db.collection("Users");
+    let response = await collection.find({ emailId: email }).toArray();
+
+    if (pwd == response[0].password) res.send("Login Successful");
+    else res.send("Incorrect username or password");
+  }
+
+  getData(email);
+  // const response = getData(email);
+  // console.log(response);
   // res.json({ email: email, pwd: pwd });
-  res.send(req.body);
 });
 
 module.exports = loginRouter;
