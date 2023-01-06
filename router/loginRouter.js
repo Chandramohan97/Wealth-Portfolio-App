@@ -5,7 +5,6 @@ const { MongoClient } = require("mongodb");
 const url = "mongodb://localhost:27017";
 const dataBase = "Login";
 const client = new MongoClient(url);
-let popups = require("alert");
 
 // async function getData(email) {
 //   let result = await client.connect(); // returns a promise object since it takes a bit of time.Connects to the url.
