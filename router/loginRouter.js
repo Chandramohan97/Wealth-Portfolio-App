@@ -5,6 +5,7 @@ const { MongoClient } = require("mongodb");
 const url = "mongodb://localhost:27017";
 const dataBase = "Login";
 const client = new MongoClient(url);
+let md5 = require("md5");
 
 // async function getData(email) {
 //   let result = await client.connect(); // returns a promise object since it takes a bit of time.Connects to the url.
@@ -26,7 +27,7 @@ loginRouter.get("/", (req, res) => {
 
 loginRouter.post("/", (req, res) => {
   const email = req.body.email;
-  const pwd = req.body.pwd;
+  const pwd = md5(req.body.pwd);
 
   async function getData(email) {
     let result = await client.connect(); // returns a promise object since it takes a bit of time.Connects to the url.
@@ -34,7 +35,7 @@ loginRouter.post("/", (req, res) => {
     let collection = db.collection("Users");
     let response = await collection.find({ emailId: email }).toArray();
 
-    if (pwd == response[0].password) res.send("Login Successful");
+    if (pwd == response[0].password) res.send(response);
     else res.send("Incorrect username or password");
   }
 

@@ -5,6 +5,7 @@ const { MongoClient } = require("mongodb");
 const url = "mongodb://localhost:27017";
 const dataBase = "Login";
 const client = new MongoClient(url);
+let md5 = require("md5");
 
 signUpRouter.use(bodyParser.urlencoded({ extended: true }));
 
@@ -18,7 +19,7 @@ signUpRouter.post("/", (req, res) => {
   const fname = req.body.name;
   const mobNo = req.body.mobNo;
   const email = req.body.email;
-  const pwd = req.body.pwd;
+  const pwd = md5(req.body.pwd);
 
   async function getData() {
     let result = await client.connect(); // returns a promise object since it takes a bit of time.Connects to the url.
