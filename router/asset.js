@@ -1,3 +1,5 @@
+// Asset api returns the information regarding portfolio
+
 const assets = require("express").Router();
 const path = require("path");
 const bodyParser = require("body-parser");
