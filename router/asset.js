@@ -33,10 +33,11 @@ assets.post("/", (req, res) => {
       //   console.log(Promise.resolve(Assets));
       //   res.send(Promise.resolve(Assets));
       const obj = {
-        Name: getAssets[0].Name,
-        "Assets:": getAssets[0].Assets,
-        Equity: getAssets[0].Equity,
-        "Fixed Income": getAssets[0]["Fixed Income"],
+        Name: getAssets[0].Name, // returns the Name
+        "Assets:": getAssets[0].Assets, //return the list of assets
+        Equity: getAssets[0].Equity, //returns the amount present in equity
+        "Fixed Income": getAssets[0]["Fixed Income"], // returns the fixed income of the logged in user
+        // "Savings" : getAssets[0].Savings //  returns the savings
       };
       res.send(obj);
     } else res.send("Incorrect username or password");
