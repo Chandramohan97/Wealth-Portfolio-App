@@ -43,7 +43,7 @@ signUpRouter.post("/", (req, res) => {
         if (err) throw err;
         console.log("Document inserted");
       });
-      res.send("Sign up was succesful");
+      res.send(userData);
     }
   }
 
