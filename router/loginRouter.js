@@ -1,3 +1,6 @@
+// login router for helping the user to login
+// Please change the action to '/login' in the form tag of login.html
+
 const loginRouter = require("express").Router();
 const path = require("path");
 const bodyParser = require("body-parser");
