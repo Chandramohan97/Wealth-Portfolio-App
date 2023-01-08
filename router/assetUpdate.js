@@ -8,6 +8,7 @@ const { MongoClient } = require("mongodb");
 const url = "mongodb://localhost:27017";
 const dataBase = "Login";
 const client = new MongoClient(url);
+const { transporter, mailOptions } = require("../sendMail"); // importing transporter function from sendMail module
 
 let md5 = require("md5"); //library for password encryption.
 
@@ -39,7 +40,16 @@ assetUpdate.post("/", (req, res) => {
       };
       collection.updateOne(fixed, newFixed, (err, res) => {
         if (err) throw err;
-        else console.log("Document updated");
+        else {
+          // console.log('DOCS updated')
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("Email sent: " + info.response);
+            }
+          });
+        }
       });
     }
   }
